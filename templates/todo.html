@@ -67,19 +67,27 @@ button:hover {
     <div class="container">
         <h1>Todo List</h1>
         <input type="text" id="taskInput" placeholder="Enter a new task">
+        <input type="text" id="descInput" placeholder="Describe ur task">
         <button id="addButton">Add Task</button>
         <table id="taskTable">
             <thead>
                 <tr>
+                    <th>Sno.</th>
                     <th>Task</th>
-                    <th>Action</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody id="taskList">
-                <!-- Tasks will be added dynamically here -->
+              {%for todo in data%}
+                <tr>
+                  <th>{{todo}}</th>
+                  <th>{{todo.name}}</th>
+                  <th>{{todo.des}}</th>
+                </tr>
+              {%endfor%}
             </tbody>
         </table>
     </div>
-    <script src="script.js"></script>
+    
 </body>
 </html>
