@@ -11,7 +11,7 @@
 }
 
 .container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -40,6 +40,33 @@ button {
     cursor: pointer;
 }
 
+button.update-button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button.delete-button {
+        padding: 10px 20px;
+        background-color: #FF0000;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    /* Change button colors on hover */
+    button.update-button:hover {
+        background-color: #218d21;
+    }
+
+    button.delete-button:hover {
+        background-color: #7d2e2e;
+    }
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -59,32 +86,49 @@ th {
 button:hover {
     background-color: #0056b3;
 }
-
+action_button {
+  text-align: center;
+}
     </style>
     <title>Todo List</title>
 </head>
 <body>
     <div class="container">
         <h1>Todo List</h1>
-        <input type="text" id="taskInput" placeholder="Enter a new task">
-        <input type="text" id="descInput" placeholder="Describe ur task">
+        <form action="\" method="POST">
+        <input type="text" name="name" id="taskInput" placeholder="Enter a new task">
+        <input type="text" name="des" id="descInput" placeholder="Describe ur task">
         <button id="addButton">Add Task</button>
+        </form>
+        {% if alltodo|length==0 %}
+        <p>No ToDo Tasks</p>
+        {% else %}
+        <p>Your ToDo Tasks : - </p>
         <table id="taskTable">
             <thead>
                 <tr>
                     <th>Sno.</th>
                     <th>Task</th>
                     <th>Description</th>
+                    <th>Date / Time</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="taskList">
-              {%for todo in data%}
+              {%for todo in alltodo%}
                 <tr>
-                  <th>{{todo}}</th>
-                  <th>{{todo.name}}</th>
-                  <th>{{todo.des}}</th>
+                  <td>{{todo.sno}}</td>
+                  <td>{{todo.name}}</td>
+                  <td>{{todo.des}}</td>
+                  <td>{{todo.date}}</td>
+                  <td>
+                      <a href="/update/{{todo.sno}}" button class="btn btn-primary me-md-2 update-button" type="button">Update</button>
+                      <a href="/delete/{{todo.sno}}" button class="btn btn-primary delete-button" type="button">Delete</button>
+                  </td>
+                
                 </tr>
-              {%endfor%}
+              {% endfor %}
+              {% endif %}
             </tbody>
         </table>
     </div>

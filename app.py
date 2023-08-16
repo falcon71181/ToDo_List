@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -16,14 +16,29 @@ class TodoL(db.Model):
         return f"{self.sno} - {self.name}"
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def home():
-    data = TodoL.query.all()
-    return render_template('todo.html',data=data)
+    if request.method=='POST':
+        todo_name = request.form['name']
+        todo_des = request.form['des']
+        data = TodoL(name=todo_name, des=todo_des)
+        db.session.add(data)
+        db.session.commit()
 
-@app.route('/show')
-def show():
-    return 'SUCCESS'
+    alltodo = TodoL.query.all()
+    return render_template('todo.html',alltodo=alltodo)
+
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    del_data = TodoL.query.filter_by(sno=sno).first()
+    db.session.delete(del_data)
+    db.session.commit()
+    return redirect('/')
+
+@app.route('/update/<int:sno>')
+def update(sno):
+    upd_data = TodoL.query_filter_by(sno=sno).first()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5555, debug=True)
