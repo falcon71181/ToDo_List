@@ -1,104 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-button.update-button {
-        padding: 10px 20px;
-        background-color: #007BFF;
-        color: #fff;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    button.delete-button {
-        padding: 10px 20px;
-        background-color: #FF0000;
-        color: #fff;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    /* Change button colors on hover */
-    button.update-button:hover {
-        background-color: #218d21;
-    }
-
-    button.delete-button:hover {
-        background-color: #7d2e2e;
-    }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-action_button {
-  text-align: center;
-}
-    </style>
-    <title>Todo List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}
+  MyTODOList 
+{% endblock %}
+{% block body %}
     <div class="container">
         <h1>Todo List</h1>
         <form action="\" method="POST">
         <input type="text" name="name" id="taskInput" placeholder="Enter a new task">
         <input type="text" name="des" id="descInput" placeholder="Describe ur task">
-        <button id="addButton">Add Task</button>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button id="addButton" class="btn btn-primary">Add Task</button>
+        </div>
+        
+        
         </form>
         {% if alltodo|length==0 %}
         <p>No ToDo Tasks</p>
@@ -122,9 +36,9 @@ action_button {
                   <td>{{todo.des}}</td>
                   <td>{{todo.date}}</td>
                   <td>
-                      <a href="/update/{{todo.sno}}" button class="btn btn-primary me-md-2 update-button" type="button">Update</button>
-                      <a href="/delete/{{todo.sno}}" button class="btn btn-primary delete-button" type="button">Delete</button>
-                  </td>
+                      <a href="/update/{{todo.sno}}" button class="btn btn-outline-success" type="button">Update</button>
+                      <a href="/delete/{{todo.sno}}" button class="btn btn-outline-danger" type="button">Delete</button>
+                      </td>
                 
                 </tr>
               {% endfor %}
@@ -132,6 +46,4 @@ action_button {
             </tbody>
         </table>
     </div>
-    
-</body>
-</html>
+{% endblock %}

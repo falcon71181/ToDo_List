@@ -35,10 +35,18 @@ def delete(sno):
     db.session.commit()
     return redirect('/')
 
-@app.route('/update/<int:sno>')
+@app.route('/update/<int:sno>', methods=['GET', 'POST'])
 def update(sno):
-    upd_data = TodoL.query_filter_by(sno=sno).first()
-    return redirect('/')
+    upd_data = TodoL.query.get_or_404(sno)  # Retrieve the existing task based on sno
+    
+    if request.method == 'POST':
+        upd_data.name = request.form['name']  # Update the name
+        upd_data.des = request.form['des']    # Update the description
+        db.session.commit()                   # Commit the changes
+        return redirect('/')
+    
+    return render_template('update.html', todo=upd_data)
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5555, debug=True)
