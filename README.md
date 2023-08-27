@@ -2,7 +2,7 @@ Packages need to install -
 
 	flask
  
-	flask_sqlalchemy
+	sqlite3
  
 	datetime
 
